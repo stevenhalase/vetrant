@@ -26,6 +26,7 @@
       </div>
       <div class="feed-item-container-content">
         <div class="feed-item-container-content-title">{{ item.title }}</div>
+        <div v-if="item.image" :style="{ backgroundImage: `url(${item.image})` }" class="feed-item-container-content-image"></div>
         <div class="feed-item-container-content-content">{{ item.content }}</div>
       </div>
       <div class="feed-item-container-footer">
@@ -162,6 +163,16 @@ export default {
 
     .feed-item-container-content {
       width: 100%;
+
+      .feed-item-container-content-image {
+          width: 100%;
+          height: 200px;
+          border-radius: 4px;
+          margin-bottom: 10px;
+          background-position: center;
+          background-size: cover;
+          background-repeat: no-repeat;
+      }
 
       .feed-item-container-content-title {
          font-family: 'Roboto Condensed', sans-serif;

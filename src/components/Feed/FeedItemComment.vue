@@ -26,6 +26,7 @@
       </div>
       <div class="feed-item-comment-container-content">
         <div class="feed-item-comment-container-content-title">{{ comment.title }}</div>
+        <div v-if="comment.image" :style="{ backgroundImage: `url(${comment.image})` }" class="feed-item-comment-container-content-image"></div>
         <div class="feed-item-comment-container-content-content">{{ comment.content }}</div>
       </div>
       <div class="feed-item-comment-container-footer">
@@ -137,6 +138,16 @@ export default {
 
     .feed-item-comment-container-content {
       width: 100%;
+
+      .feed-item-comment-container-content-image {
+          width: 100%;
+          height: 200px;
+          border-radius: 4px;
+          margin-bottom: 10px;
+          background-position: center;
+          background-size: cover;
+          background-repeat: no-repeat;
+      }
 
       .feed-item-comment-container-content-title {
          font-family: 'Roboto Condensed', sans-serif;

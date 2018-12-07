@@ -1,5 +1,9 @@
 <template>
   <div class="feed">
+    <div class="feed-header">
+      <FeedControls />
+      <FeedUser />
+    </div>
     <div class="feed-content">
       <FeedPostEntry />
       <FeedItem v-for="(item, ind) of displayedFeedItems" :key="ind" :item="item" />
@@ -7,12 +11,16 @@
         <button @click="viewMore" class="btn btn-link">View older posts</button>
       </div>
     </div>
+    <ToTop />
   </div>
 </template>
 
 <script>
+import FeedControls from '@/components/Feed/FeedControls.vue';
+import FeedUser from '@/components/Feed/FeedUser.vue';
 import FeedPostEntry from '@/components/Feed/FeedPostEntry.vue';
 import FeedItem from '@/components/Feed/FeedItem.vue';
+import ToTop from '@/components/ToTop.vue';
 
 import { mapState } from 'vuex';
 
@@ -49,8 +57,11 @@ export default {
     }
   },
   components: {
+    FeedControls,
+    FeedUser,
     FeedPostEntry,
-    FeedItem
+    FeedItem,
+    ToTop
   }
 }
 </script>
@@ -58,11 +69,30 @@ export default {
 <style lang="scss">
 .feed {
   display: flex;
-  justify-content: center;
-  align-items: flex-start;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: center;
+  position: relative;
+
+  .feed-header {
+    width: 100%;
+    max-width: 650px;
+    position: fixed;
+    top: 0;
+    background-color: #fff;
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    margin-bottom: 10px;
+    border-bottom: 1px solid #2d3436;
+    padding: 0 15px;
+  }
 
   .feed-content {
+    width: 100%;
     max-width: 650px;
+    margin-top: 70px;
+    padding: 0 15px 15px 15px;
 
     .feed-content-view-more {
       width: 100%;
