@@ -1,11 +1,7 @@
 import feed from './feed';
 
 export default {
-  user: {
-    id: '33f00d54-274e-4db7-af50-274a178e553c',
-    name: 'shalase',
-    image: 'https://placeimg.com/249/250/people'
-  },
+  user: null,
   channels: [
     {
       id: '7cb92bd5-c997-4030-bb7b-da39346a0370',

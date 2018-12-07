@@ -3,6 +3,7 @@
 * {
   box-sizing: border-box;
   font-family: 'Roboto', sans-serif;
+  font-weight: 300;
   font-size: 13px;
 }
 
@@ -32,6 +33,7 @@ h1, h2, h3, h4, h5, h6 {
 
   &.btn-icon,
   &.btn-link {
+    font-weight: bold;
     padding: 0;
     color: #2d3436;
     background-color: transparent;
@@ -41,4 +43,12 @@ h1, h2, h3, h4, h5, h6 {
       color: #3d4548;
     }
   }
+}
+
+.input {
+  color: #2d3436;
+  border: none;
+  border-bottom: 1px solid #2d3436;
+  padding: 10px;
+
 }

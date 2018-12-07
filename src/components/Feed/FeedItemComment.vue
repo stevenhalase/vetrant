@@ -131,7 +131,7 @@ export default {
         }
 
         .feed-item-comment-container-header-user-name {
-
+          font-weight: bold;
         }
       }
     }

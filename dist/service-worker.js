@@ -14,7 +14,7 @@
 importScripts("https://storage.googleapis.com/workbox-cdn/releases/3.6.3/workbox-sw.js");
 
 importScripts(
-  "/precache-manifest.1f14b138d9fc279420f92596ff8c0b99.js"
+  "/precache-manifest.bfc44910d1daad93a26e4e18674410bb.js"
 );
 
 workbox.core.setCacheNameDetails({prefix: "vetrant"});

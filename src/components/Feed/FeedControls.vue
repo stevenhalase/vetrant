@@ -63,6 +63,7 @@ export default {
   .feed-controls-label {
     margin-right: 10px;
     padding: 5px;
+    border-bottom: 1px solid transparent;
   }
 
   .feed-controls-selected {

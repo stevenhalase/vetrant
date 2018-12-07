@@ -1,7 +1,7 @@
 <template>
   <div class="feed-item-comment-entry">
     <div class="feed-item-comment-entry-container">
-      <div class="feed-item-comment-entry-user-image" :style="{ backgroundImage: `url(${user.image})` }"></div>
+      <div class="feed-item-comment-entry-user-image" :style="{ backgroundImage: `url(data:${user.image.type};base64,${user.image.data})` }"></div>
       <textarea v-model="commentInput" class="feed-item-comment-entry-textarea" placeholder="Post a reply..."></textarea>
     </div>
     <div class="feed-item-comment-entry-controls">

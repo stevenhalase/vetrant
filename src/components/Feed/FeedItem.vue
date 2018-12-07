@@ -33,7 +33,7 @@
         <div class="feed-item-container-footer-controls">
           <button @click="toggleComments" class="btn btn-icon feed-item-container-footer-controls-comments">
             <font-awesome-icon :icon="['fas', 'comment']" class="feed-item-container-footer-controls-comments-icon"/>
-            <span>{{ commentsLinkText(item.comments.length) }}</span>
+            <span class="feed-item-container-footer-controls-comments-label">{{ commentsLinkText(item.comments.length) }}</span>
           </button>
         </div>
       </div>
@@ -156,7 +156,7 @@ export default {
         }
 
         .feed-item-container-header-user-name {
-
+          font-weight: bold;
         }
       }
     }
@@ -192,6 +192,10 @@ export default {
 
           .feed-item-container-footer-controls-comments-icon {
             margin-right: 5px;
+          }
+
+          .feed-item-container-footer-controls-comments-label {
+            font-weight: bold;
           }
 
           &:hover {

@@ -1,7 +1,7 @@
 <template>
   <div class="post-entry">
     <div class="post-entry-container">
-      <div class="post-entry-user-image" :style="{ backgroundImage: `url(${user.image})` }"></div>
+      <div class="post-entry-user-image" :style="{ backgroundImage: `url(data:${user.image.type};base64,${user.image.data})` }"></div>
       <textarea v-model="post.content" class="post-entry-textarea" placeholder="Make a post..."></textarea>
     </div>
     <div class="post-entry-controls">
