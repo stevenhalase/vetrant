@@ -23,6 +23,9 @@ Vue.use(VueTimeago, {
   locale: 'en', // Default locale
 })
 
+import VueTextareaAutosize from 'vue-textarea-autosize';
+Vue.use(VueTextareaAutosize);
+
 Vue.config.productionTip = false
 
 new Vue({

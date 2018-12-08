@@ -53,13 +53,7 @@ export default {
       formData.append('file', this.file);
       formData.append('fileType', this.file.type);
       formData.append('fileName', this.file.name);
-      this.$store.dispatch('UPDATE_AVATAR', formData)
-        .then(response => {
-          console.log(response);
-        })
-        .catch(error => {
-          console.log(error);
-        })
+      this.$store.dispatch('UPDATE_AVATAR', formData);
     }
   }
 }
@@ -75,6 +69,7 @@ export default {
   .settings-container {
     width: 100%;
     max-width: 650px;
+    margin-top: 100px;
     display: flex;
     flex-direction: column;
     justify-content: center;

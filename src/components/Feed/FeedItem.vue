@@ -2,23 +2,23 @@
   <div class="feed-item">
     <div class="feed-item-side-controls">
       <div class="feed-item-side-controls-like">
-        <button class="btn btn-icon">
+        <button @click="like" class="btn btn-icon" :class="{ 'btn-icon-success': liked }" :disabled="liked">
           <font-awesome-icon :icon="['fas', 'plus-circle']" class="feed-item-side-controls-like-icon"/>
         </button>
-        <span class="feed-item-side-controls-like-count">{{ item.likes.length }}</span>
+        <span class="feed-item-side-controls-like-count">{{ numLikes }}</span>
       </div>
       <div class="feed-item-side-controls-dislike">
-        <button class="btn btn-icon">
+        <button @click="dislike" class="btn btn-icon" :class="{ 'btn-icon-success': disliked }" :disabled="disliked">
           <font-awesome-icon :icon="['fas', 'minus-circle']" class="feed-item-side-controls-dislike-icon"/>
         </button>
-        <span class="feed-item-side-controls-dislike-count">{{ item.dislikes.length }}</span>
+        <span class="feed-item-side-controls-dislike-count">{{ numDislikes }}</span>
       </div>
     </div>
     <div class="feed-item-container">
       <div class="feed-item-container-header">
         <div class="feed-item-container-header-user">
-          <span :style="{ backgroundImage: `url(${item.user.image})` }" class="feed-item-container-header-user-image"></span>
-          <span class="feed-item-container-header-user-name">{{ item.user.name }}</span>
+          <span :style="{ backgroundImage: `url(data:${item.user.image.type};base64,${item.user.image.data})` }" class="feed-item-container-header-user-image"></span>
+          <span class="feed-item-container-header-user-name">{{ username }}</span>
         </div>
         <div class="feed-item-container-header-date">
           <timeago :datetime="item.date"></timeago>
@@ -26,14 +26,14 @@
       </div>
       <div class="feed-item-container-content">
         <div class="feed-item-container-content-title">{{ item.title }}</div>
-        <div v-if="item.image" :style="{ backgroundImage: `url(${item.image})` }" class="feed-item-container-content-image"></div>
+        <div v-if="item.image" :style="{ backgroundImage: `url(data:${item.image.type};base64,${item.image.data})` }" class="feed-item-container-content-image"></div>
         <div class="feed-item-container-content-content">{{ item.content }}</div>
       </div>
       <div class="feed-item-container-footer">
         <div class="feed-item-container-footer-controls">
           <button @click="toggleComments" class="btn btn-icon feed-item-container-footer-controls-comments">
             <font-awesome-icon :icon="['fas', 'comment']" class="feed-item-container-footer-controls-comments-icon"/>
-            <span class="feed-item-container-footer-controls-comments-label">{{ commentsLinkText(item.comments.length) }}</span>
+            <span class="feed-item-container-footer-controls-comments-label">{{ commentsLinkText }}</span>
           </button>
         </div>
       </div>
@@ -61,12 +61,46 @@ export default {
       commentsOpen: false
     };
   },
-  methods: {
-    commentsLinkText(count) {
-      return count !== 1 ? `${count} Replies` : `${count} Reply`;
+  computed: {
+    ...mapState({
+      user: state => state.user,
+    }),
+    username() {
+      return this.item.user.name ? this.item.user.name : this.item.user.username;
     },
+    numLikes() {
+      return this.item && this.item.likes ? this.item.likes.length : 0;
+    },
+    numDislikes() {
+      return this.item && this.item.dislikes ? this.item.dislikes.length : 0;
+    },
+    commentsLinkText() {
+      return this.item.comments ? this.item.comments.length !== 1 ? `${this.item.comments.length} Replies` : `${this.item.comments.length} Reply` : '0 Replies';
+    },
+    liked() {
+      return this.item && this.item.likes ? this.item.likes.find(l => l.user === this.user._id) : false;
+    },
+    disliked() {
+      return this.item && this.item.dislikes ? this.item.dislikes.find(d => d.user === this.user._id) : false;
+    }
+  },
+  methods: {
     toggleComments() {
       this.commentsOpen = !this.commentsOpen;
+    },
+    like() {
+      const like = {
+        user: this.user._id,
+        post: this.item._id
+      };
+      this.$store.dispatch('CREATE_LIKE', like);
+    },
+    dislike() {
+      const dislike = {
+        user: this.user._id,
+        post: this.item._id
+      };
+      this.$store.dispatch('CREATE_DISLIKE', dislike);
     }
   },
   components: {
@@ -163,6 +197,11 @@ export default {
 
     .feed-item-container-content {
       width: 100%;
+
+      .feed-item-container-content-content {
+        padding: 10px 0;
+        white-space: pre-wrap;
+      }
 
       .feed-item-container-content-image {
           width: 100%;

@@ -1,14 +1,19 @@
 <template>
   <div class="auth">
     <div class="auth-container">
+      <div class="auth-logo">
+        <Logo :height="'100px'" :width="'100px'"/>
+        <div class="auth-logo-name">VetRant</div>
+      </div>
       <input v-model="username" type="text" class="input auth-username-input" placeholder="Username"/>
-      <input v-model="password" keydown.enter="login" type="password" class="input auth-password-input" placeholder="Password"/>
+      <input v-model="password" @keydown.enter="login" type="password" class="input auth-password-input" placeholder="Password"/>
       <button @click="login" class="btn auth-submit-button">Login</button>
     </div>
   </div>
 </template>
 
 <script>
+import Logo from '@/components/Logo.vue';
 import { mapState } from 'vuex';
 
 export default {
@@ -35,6 +40,9 @@ export default {
           this.password = '';
         });
     }
+  },
+  components: {
+    Logo
   }
 }
 </script>
@@ -53,6 +61,15 @@ export default {
     flex-direction: column;
     justify-content: center;
     align-items: center;
+
+    .auth-logo {
+
+      .auth-logo-name {
+        font-size: 28px;
+        font-weight: bold;
+        color: #2d3436;
+      }
+    }
 
     .input {
       margin-bottom: 10px;

@@ -2,7 +2,6 @@
   <div class="feed">
     <div class="feed-header">
       <FeedControls />
-      <FeedUser />
     </div>
     <div class="feed-content">
       <FeedPostEntry />
@@ -17,7 +16,6 @@
 
 <script>
 import FeedControls from '@/components/Feed/FeedControls.vue';
-import FeedUser from '@/components/Feed/FeedUser.vue';
 import FeedPostEntry from '@/components/Feed/FeedPostEntry.vue';
 import FeedItem from '@/components/Feed/FeedItem.vue';
 import ToTop from '@/components/ToTop.vue';
@@ -49,6 +47,9 @@ export default {
       return this.end === this.feed.items.length;
     }
   },
+  beforeMount() {
+    this.$store.dispatch('GET_CHANNELS');
+  },
   methods: {
     viewMore() {
       const numFeedItems = this.feed.items.length;
@@ -58,7 +59,6 @@ export default {
   },
   components: {
     FeedControls,
-    FeedUser,
     FeedPostEntry,
     FeedItem,
     ToTop
@@ -78,7 +78,7 @@ export default {
     width: 100%;
     max-width: 650px;
     position: fixed;
-    top: 0;
+    top: 60px;
     background-color: #fff;
     display: flex;
     justify-content: space-between;
@@ -86,12 +86,13 @@ export default {
     margin-bottom: 10px;
     border-bottom: 1px solid #2d3436;
     padding: 0 15px;
+    z-index: 100;
   }
 
   .feed-content {
     width: 100%;
     max-width: 650px;
-    margin-top: 70px;
+    margin-top: 100px;
     padding: 0 15px 15px 15px;
 
     .feed-content-view-more {

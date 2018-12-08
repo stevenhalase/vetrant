@@ -1,13 +1,17 @@
 import axios from 'axios';
 
 const API = {
-  // BASE: 'http://DESKTOP-PEI2O18:60707/api/v1/',
+  // BASE: 'http://DESKTOP-PEI2O18:63264/api/v1/',
   BASE: 'https://vetrant-api.herokuapp.com/api/v1/',
-  TRANSLATION: 'translation/',
   USER: {
     LOGIN: 'user/login/',
     AVATAR: 'user/avatar/'
-  }
+  },
+  POST: 'post/',
+  LIKE: 'like/',
+  DISLIKE: 'dislike/',
+  COMMENT: 'comment/',
+  CHANNEL: 'channel/'
 };
 
 export default {
@@ -27,14 +31,14 @@ export default {
           // handle error
           console.log(error);
           reject(error);
-        })
-    })
+        });
+    });
   },
   LOGOUT({ commit, state }, payload) {
     return new Promise((resolve, reject) => {
       commit('SET_USER', null);
       resolve();
-    })
+    });
   },
   GET_LOCAL_USER({ commit, state }, payload) {
     return new Promise((resolve, reject) => {
@@ -58,6 +62,109 @@ export default {
           console.log(error);
           reject(error);
         });
+    });
+  },
+  CREATE_POST({ commit, state }, formData) {
+    return new Promise((resolve, reject) => {
+      axios.post(`${API.BASE}${API.POST}`, formData, { headers: { 'Content-Type': 'multipart/form-data' } })
+        .then(response => {
+          resolve(response.data);
+        })
+        .catch(error => {
+          console.log(error);
+          reject(error);
+        });
+    });
+  },
+  CREATE_COMMENT({ commit, state }, formData) {
+    return new Promise((resolve, reject) => {
+      axios.post(`${API.BASE}${API.COMMENT}`, formData, { headers: { 'Content-Type': 'multipart/form-data' } })
+        .then(response => {
+          resolve(response.data);
+          commit('APPEND_POST_COMMENT', response.data);
+        })
+        .catch(error => {
+          console.log(error);
+          reject(error);
+        });
+    });
+  },
+  CREATE_LIKE({ commit, state }, like) {
+    return new Promise((resolve, reject) => {
+      axios.post(`${API.BASE}${API.LIKE}`, like)
+        .then(response => {
+          resolve(response.data);
+          if (like.post) {
+            commit('APPEND_POST_LIKE', response.data);
+          }
+          if (like.comment) {
+            commit('APPEND_COMMENT_LIKE', response.data);
+          }
+        })
+        .catch(error => {
+          console.log(error);
+          reject(error);
+        });
+    });
+  },
+  CREATE_DISLIKE({ commit, state }, dislike) {
+    return new Promise((resolve, reject) => {
+      axios.post(`${API.BASE}${API.DISLIKE}`, dislike)
+        .then(response => {
+          resolve(response.data);
+          if (dislike.post) {
+            commit('APPEND_POST_DISLIKE', response.data);
+          }
+          if (dislike.comment) {
+            commit('APPEND_COMMENT_DISLIKE', response.data);
+          }
+        })
+        .catch(error => {
+          console.log(error);
+          reject(error);
+        });
+    });
+  },
+  GET_CHANNELS({ commit, dispatch, state }) {
+    return new Promise((resolve, reject) => {
+      axios.get(`${API.BASE}${API.CHANNEL}`)
+        .then(response => {
+          commit('SET_CHANNELS', response.data);
+          if (response.data && response.data.length) {
+            dispatch('SET_SELECTED_CHANNEL', response.data[0]);
+          }
+          resolve(response.data);
+        })
+        .catch(error => {
+          console.log(error);
+          reject(error);
+        });
+    });
+  },
+  SET_SELECTED_CHANNEL({ commit, dispatch, state }, channel) {
+    return new Promise((resolve, reject) => {
+      commit('SET_SELECTED_CHANNEL', channel);
+      dispatch('GET_POSTS', channel);
+      resolve(channel);
     })
+  },
+  GET_POSTS({ commit, state }, channel) {
+    commit('SET_LOADING', true);
+    if (!channel) {
+      channel = state.selectedChannel;
+    }
+    return new Promise((resolve, reject) => {
+      axios.get(`${API.BASE}${API.POST}${API.CHANNEL}${channel._id}`)
+        .then(response => {
+          commit('SET_POSTS', response.data);
+          commit('SET_LOADING', false);
+          resolve(response.data);
+        })
+        .catch(error => {
+          console.log(error);
+          commit('SET_LOADING', false);
+          reject(error);
+        });
+    });
   }
 }

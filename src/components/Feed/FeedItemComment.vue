@@ -2,32 +2,31 @@
   <div class="feed-item-comment">
     <div class="feed-item-comment-side-controls">
       <div class="feed-item-comment-side-controls-like">
-        <button class="btn btn-icon">
+        <button @click="like" class="btn btn-icon" :class="{ 'btn-icon-success': liked }" :disabled="liked">
           <font-awesome-icon :icon="['fas', 'plus-circle']" class="feed-item-comment-side-controls-like-icon"/>
         </button>
-        <span class="feed-item-comment-side-controls-like-count">{{ comment.likes.length }}</span>
+        <span class="feed-item-comment-side-controls-like-count">{{ numLikes }}</span>
       </div>
       <div class="feed-item-comment-side-controls-dislike">
-        <button class="btn btn-icon">
+        <button @click="dislike" class="btn btn-icon" :class="{ 'btn-icon-success': disliked }" :disabled="disliked">
           <font-awesome-icon :icon="['fas', 'minus-circle']" class="feed-item-comment-side-controls-dislike-icon"/>
         </button>
-        <span class="feed-item-comment-side-controls-dislike-count">{{ comment.dislikes.length }}</span>
+        <span class="feed-item-comment-side-controls-dislike-count">{{ numDislikes }}</span>
       </div>
     </div>
     <div class="feed-item-comment-container">
       <div class="feed-item-comment-container-header">
         <div class="feed-item-comment-container-header-user">
-          <span :style="{ backgroundImage: `url(${comment.user.image})` }" class="feed-item-comment-container-header-user-image"></span>
-          <span class="feed-item-comment-container-header-user-name">{{ comment.user.name }}</span>
+          <span :style="{ backgroundImage: `url(data:${comment.user.image.type};base64,${comment.user.image.data})` }" class="feed-item-comment-container-header-user-image"></span>
+          <span class="feed-item-comment-container-header-user-name">{{ username }}</span>
         </div>
         <div class="feed-item-comment-container-header-date">
           <timeago :datetime="comment.date"></timeago>
         </div>
       </div>
       <div class="feed-item-comment-container-content">
-        <div class="feed-item-comment-container-content-title">{{ comment.title }}</div>
-        <div v-if="comment.image" :style="{ backgroundImage: `url(${comment.image})` }" class="feed-item-comment-container-content-image"></div>
         <div class="feed-item-comment-container-content-content">{{ comment.content }}</div>
+        <div v-if="comment.image" :style="{ backgroundImage: `url(data:${comment.image.type};base64,${comment.image.data})` }" class="feed-item-comment-container-content-image"></div>
       </div>
       <div class="feed-item-comment-container-footer">
         <div class="feed-item-comment-container-footer-controls">
@@ -39,12 +38,50 @@
 </template>
 
 <script>
+import { mapState } from 'vuex';
+
 export default {
   name: 'feed-item-comment',
   props: {
     comment: {
       type: Object,
       required: true
+    }
+  },
+  computed: {
+    ...mapState({
+      user: state => state.user,
+    }),
+    username() {
+      return this.comment.user.name ? this.comment.user.name : this.comment.user.username;
+    },
+    numLikes() {
+      return this.comment && this.comment.likes ? this.comment.likes.length : 0;
+    },
+    numDislikes() {
+      return this.comment && this.comment.dislikes ? this.comment.dislikes.length : 0;
+    },
+    liked() {
+      return this.comment && this.comment.likes ? this.comment.likes.find(l => l.user === this.user._id) : false;
+    },
+    disliked() {
+      return this.comment && this.comment.dislikes ? this.comment.dislikes.find(d => d.user === this.user._id) : false;
+    }
+  },
+  methods: {
+    like() {
+      const like = {
+        user: this.user._id,
+        comment: this.comment._id
+      };
+      this.$store.dispatch('CREATE_LIKE', like);
+    },
+    dislike() {
+      const dislike = {
+        user: this.user._id,
+        comment: this.comment._id
+      };
+      this.$store.dispatch('CREATE_DISLIKE', dislike);
     }
   },
 }
@@ -139,6 +176,11 @@ export default {
     .feed-item-comment-container-content {
       width: 100%;
 
+      .feed-item-comment-container-content-content {
+        padding: 10px 0;
+        white-space: pre-wrap;
+      }
+
       .feed-item-comment-container-content-image {
           width: 100%;
           height: 200px;
@@ -147,13 +189,6 @@ export default {
           background-position: center;
           background-size: cover;
           background-repeat: no-repeat;
-      }
-
-      .feed-item-comment-container-content-title {
-         font-family: 'Roboto Condensed', sans-serif;
-         font-weight: bold;
-         font-size: 16px;
-         padding: 10px 0;
       }
     }
 
