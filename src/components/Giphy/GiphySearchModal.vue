@@ -62,6 +62,7 @@ export default {
     flex-direction: column;
     justify-content: flex-start;
     align-items: center;
+    z-index: 50;
 
     .giphy-search-controls {
       width: 100%;
