@@ -20,19 +20,31 @@
             </button>
           </div>
         </div>
+        <div v-if="post.giphyUrl" class="post-image-upload-container">
+          <div class="post-image-upload-preview" :style="{ backgroundImage: `url(${post.giphyUrl})` }">
+            <button @click="cancelGiphyUpload" class="btn btn-icon post-image-upload-cancel">
+              <font-awesome-icon :icon="['far', 'window-close']" class="post-image-upload-cancel-icon"/>
+            </button>
+          </div>
+        </div>
       </div>
     </div>
     <div class="post-entry-controls">
+      <button @click="toggleGiphySearch" class="btn btn-icon post-entry-image">
+        <font-awesome-icon :icon="['fas', 'camera-retro']" class="post-entry-gif-icon"/>
+      </button>
       <button @click="clickUpload" class="btn btn-icon post-entry-image">
         <font-awesome-icon :icon="['fas', 'image']" class="post-entry-image-icon"/>
       </button>
       <button @click="submitPost" class="btn post-entry-controls-submit">Post</button>
     </div>
+    <GiphySearchModal @selectGiphy="selectGiphy" :open="giphySearchOpen"/>
     <input type="file" id="post-image-upload" ref="file" v-on:change="handleFileSelection"/>
   </div>
 </template>
 
 <script>
+import GiphySearchModal from '@/components/Giphy/GiphySearchModal.vue';
 import { mapState } from 'vuex';
 
 export default {
@@ -42,8 +54,10 @@ export default {
       post: {
         title: '',
         content: '',
-        image: null
-      }
+        image: null,
+        giphyUrl: null
+      },
+      giphySearchOpen: false
     };
   },
   computed: {
@@ -64,6 +78,10 @@ export default {
         formData.append('file', this.post.image.file);
         formData.append('fileType', this.post.image.fileType);
         formData.append('fileName', this.post.image.fileName);
+      }
+
+      if (this.post.giphyUrl) {
+        formData.append('giphyUrl', this.post.giphyUrl);
       }
 
       this.$store.dispatch('CREATE_POST', formData)
@@ -108,7 +126,20 @@ export default {
     },
     cancelUpload() {
       this.post.image = null;
+    },
+    cancelGiphyUpload() {
+      this.post.giphyUrl = null;
+    },
+    toggleGiphySearch() {
+      this.giphySearchOpen = !this.giphySearchOpen;
+    },
+    selectGiphy(giphy) {
+      this.giphySearchOpen = false;
+      this.post.giphyUrl = giphy.images.original.url;
     }
+  },
+  components: {
+    GiphySearchModal
   }
 }
 </script>
@@ -120,6 +151,7 @@ export default {
   flex-direction: column;
   justify-content: center;
   align-items: center;
+  position: relative;
   
   #post-image-upload {
     visibility: hidden;
@@ -204,7 +236,8 @@ export default {
     .post-entry-image {
       margin-right: 10px;
 
-      .post-entry-image-icon {
+      .post-entry-image-icon,
+      .post-entry-gif-icon {
         font-size: 22px;
       }
     }

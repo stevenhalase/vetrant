@@ -1,7 +1,7 @@
 import axios from 'axios';
 
 const API = {
-  // BASE: 'http://DESKTOP-PEI2O18:63264/api/v1/',
+  // BASE: 'http://DESKTOP-PEI2O18:51640/api/v1/',
   BASE: 'https://vetrant-api.herokuapp.com/api/v1/',
   USER: {
     LOGIN: 'user/login/',
@@ -11,7 +11,8 @@ const API = {
   LIKE: 'like/',
   DISLIKE: 'dislike/',
   COMMENT: 'comment/',
-  CHANNEL: 'channel/'
+  CHANNEL: 'channel/',
+  GIPHY: 'giphy/'
 };
 
 export default {
@@ -163,6 +164,18 @@ export default {
         .catch(error => {
           console.log(error);
           commit('SET_LOADING', false);
+          reject(error);
+        });
+    });
+  },
+  SEARCH_GIPHY({ commit, state }, query) {
+    return new Promise((resolve, reject) => {
+      axios.get(`${API.BASE}${API.GIPHY}${encodeURIComponent(query)}`)
+        .then(response => {
+          resolve(response.data);
+        })
+        .catch(error => {
+          console.log(error);
           reject(error);
         });
     });

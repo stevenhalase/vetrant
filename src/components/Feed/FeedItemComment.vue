@@ -27,6 +27,7 @@
       <div class="feed-item-comment-container-content">
         <div class="feed-item-comment-container-content-content">{{ comment.content }}</div>
         <div v-if="comment.image" :style="{ backgroundImage: `url(data:${comment.image.type};base64,${comment.image.data})` }" class="feed-item-comment-container-content-image"></div>
+        <div v-if="comment.giphyUrl" :style="{ backgroundImage: `url(${comment.giphyUrl})` }" class="feed-item-comment-container-content-image"></div>
       </div>
       <div class="feed-item-comment-container-footer">
         <div class="feed-item-comment-container-footer-controls">

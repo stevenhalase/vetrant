@@ -19,19 +19,31 @@
             </button>
           </div>
         </div>
+        <div v-if="comment.giphyUrl" class="feed-item-comment-image-upload-container">
+          <div class="feed-item-comment-image-upload-preview" :style="{ backgroundImage: `url(${comment.giphyUrl})` }">
+            <button @click="cancelGiphyUpload" class="btn btn-icon feed-item-comment-image-upload-cancel">
+              <font-awesome-icon :icon="['far', 'window-close']" class="feed-item-comment-image-upload-cancel-icon"/>
+            </button>
+          </div>
+        </div>
       </div>
     </div>
     <div class="feed-item-comment-entry-controls">
+      <button @click="toggleGiphySearch" class="btn btn-icon feed-item-comment-entry-image">
+        <font-awesome-icon :icon="['fas', 'camera-retro']" class="feed-item-comment-entry-gif-icon"/>
+      </button>
       <button @click="clickUpload" class="btn btn-icon feed-item-comment-entry-image">
         <font-awesome-icon :icon="['fas', 'image']" class="feed-item-comment-entry-image-icon"/>
       </button>
       <button @click="submitComment" class="btn feed-item-comment-entry-controls-submit">Reply</button>
     </div>
+    <GiphySearchModal @selectGiphy="selectGiphy" :open="giphySearchOpen"/>
     <input type="file" id="comment-image-upload" ref="file" v-on:change="handleFileSelection"/>
   </div>
 </template>
 
 <script>
+import GiphySearchModal from '@/components/Giphy/GiphySearchModal.vue';
 import { mapState } from 'vuex';
 
 export default {
@@ -46,8 +58,10 @@ export default {
     return {
       comment: {
         content: '',
-        image: null
-      }
+        image: null,
+        giphyUrl: null
+      },
+      giphySearchOpen: false
     };
   },
   computed: {
@@ -66,6 +80,10 @@ export default {
         formData.append('file', this.comment.image.file);
         formData.append('fileType', this.comment.image.fileType);
         formData.append('fileName', this.comment.image.fileName);
+      }
+
+      if (this.comment.giphyUrl) {
+        formData.append('giphyUrl', this.comment.giphyUrl);
       }
 
       this.$store.dispatch('CREATE_COMMENT', formData)
@@ -110,7 +128,20 @@ export default {
     },
     cancelUpload() {
       this.comment.image = null;
+    },
+    cancelGiphyUpload() {
+      this.comment.giphyUrl = null;
+    },
+    toggleGiphySearch() {
+      this.giphySearchOpen = !this.giphySearchOpen;
+    },
+    selectGiphy(giphy) {
+      this.giphySearchOpen = false;
+      this.comment.giphyUrl = giphy.images.original.url;
     }
+  },
+  components: {
+    GiphySearchModal
   }
 }
 </script>
@@ -122,6 +153,7 @@ export default {
   flex-direction: column;
   justify-content: center;
   align-items: center;
+  position: relative;
   
   #comment-image-upload {
     visibility: hidden;
@@ -206,7 +238,8 @@ export default {
     .feed-item-comment-entry-image {
       margin-right: 10px;
 
-      .feed-item-comment-entry-image-icon {
+      .feed-item-comment-entry-image-icon,
+      .feed-item-comment-entry-gif-icon {
         font-size: 22px;
       }
     }

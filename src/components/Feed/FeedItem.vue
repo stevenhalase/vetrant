@@ -27,6 +27,7 @@
       <div class="feed-item-container-content">
         <div class="feed-item-container-content-title">{{ item.title }}</div>
         <div v-if="item.image" :style="{ backgroundImage: `url(data:${item.image.type};base64,${item.image.data})` }" class="feed-item-container-content-image"></div>
+        <div v-if="item.giphyUrl" :style="{ backgroundImage: `url(${item.giphyUrl})` }" class="feed-item-container-content-image"></div>
         <div class="feed-item-container-content-content">{{ item.content }}</div>
       </div>
       <div class="feed-item-container-footer">
