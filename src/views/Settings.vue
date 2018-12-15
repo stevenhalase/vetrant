@@ -99,7 +99,7 @@ export default {
       .settings-avatar-preview-edit {
         width: 100%;
         height: 100%;
-        background-color: rgba(0,0,0,0.5);
+        background-color: $blackHalf;
         justify-content: center;
         align-items: center;
         position: absolute;
@@ -109,7 +109,7 @@ export default {
 
         .settings-avatar-preview-edit-icon {
           font-size: 24px;
-          color: #fff;
+          color: $white;
         }
       }
 
@@ -118,6 +118,22 @@ export default {
 
         .settings-avatar-preview-edit {
           display: flex;
+        }
+      }
+    }
+  }
+}
+
+.dark {
+  .settings {
+    .settings-container {
+      .settings-avatar-preview {
+        .settings-avatar-preview-edit {
+          background-color: $blackHalfDark;
+
+          .settings-avatar-preview-edit-icon {
+            color: $whiteDark;
+          }
         }
       }
     }

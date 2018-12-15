@@ -1,7 +1,7 @@
 <template>
   <div class="navigation">
     <div @click="goTo('feed')" class="logo">
-      <Logo :height="'40px'" :width="'40px'"/>
+      <Logo :height="'40px'" :width="'40px'" :color="theme === 'Light' ? '#2d3436' : '#fff'"/>
       <div class="logo-name">VetRant</div>
     </div>
     <User v-if="user" />
@@ -17,7 +17,8 @@ export default {
   name: 'navigation',
   computed: {
     ...mapState({
-      user: state => state.user
+      user: state => state.user,
+      theme: state => state.theme
     })
   },
   methods: {
@@ -38,12 +39,12 @@ export default {
   height: 60px;
   position: fixed;
   top: 0;
-  background-color: #fff;
+  background-color: $white;
   display: flex;
   justify-content: space-between;
   align-items: center;
   margin-bottom: 10px;
-  border-bottom: 1px solid #2d3436;
+  border-bottom: 1px solid $outerSpace;
   padding: 0 15px;
   z-index: 200;
 
@@ -55,7 +56,24 @@ export default {
     .logo-name {
       font-size: 24px;
       font-weight: bold;
-      color: #2d3436;
+      color: $outerSpace;
+    }
+
+    &:hover {
+      cursor: pointer;
+    }
+  }
+}
+
+.dark {
+  
+  .navigation {
+    background-color: $whiteDark;
+    border-bottom: 1px solid $outerSpaceDark;
+    .logo {
+      .logo-name {
+        color: $outerSpaceDark;
+      }
     }
   }
 }

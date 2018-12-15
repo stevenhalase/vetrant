@@ -66,14 +66,25 @@ export default {
 <style lang="scss" scoped>
 .feed-item-comments {
   width: 100%;
-  background-color: #f3f3f3;
+  background-color: $concrete;
   padding: 10px;
-  border-left: 2px solid #2d3436;
+  border-left: 2px solid $outerSpace;
 
   .feed-item-comments-view-more {
     width: 100%;
     padding: 10px;
-    border-bottom: 1px solid #dfe6e9;
+    border-bottom: 1px solid $geyser;
+  }
+}
+
+.dark {
+  .feed-item-comments {
+    background-color: $concreteDark;
+    border-left: 2px solid $outerSpaceDark;
+
+    .feed-item-comments-view-more {
+      border-bottom: 1px solid $geyserDark;
+    }
   }
 }
 </style>

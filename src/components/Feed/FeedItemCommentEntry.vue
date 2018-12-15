@@ -166,8 +166,8 @@ export default {
     display: flex;
     justify-content: center;
     align-items: flex-start;
-    border-top: 1px solid #dfe6e9;
-    border-bottom: 1px solid #dfe6e9;
+    border-top: 1px solid $geyser;
+    border-bottom: 1px solid $geyser;
     padding: 10px 0;
 
     .feed-item-comment-entry-user-image {
@@ -233,7 +233,7 @@ export default {
     justify-content: flex-end;
     align-items: center;
     padding: 10px;
-    border-bottom: 1px solid #dfe6e9;
+    border-bottom: 1px solid $geyser;
 
     .feed-item-comment-entry-image {
       margin-right: 10px;
@@ -246,6 +246,19 @@ export default {
 
     .feed-item-comment-entry-controls-submit {
       
+    }
+  }
+}
+
+.dark {
+  .feed-item-comment-entry {
+    .feed-item-comment-entry-container {
+      border-top: 1px solid $geyserDark;
+      border-bottom: 1px solid $geyserDark;
+    }
+
+    .feed-item-comment-entry-controls {
+      border-bottom: 1px solid $geyserDark;
     }
   }
 }

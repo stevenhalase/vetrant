@@ -164,8 +164,8 @@ export default {
     display: flex;
     justify-content: center;
     align-items: flex-start;
-    border-top: 1px solid #dfe6e9;
-    border-bottom: 1px solid #dfe6e9;
+    border-top: 1px solid $geyser;
+    border-bottom: 1px solid $geyser;
     padding: 10px 0;
 
     .post-entry-user-image {
@@ -231,7 +231,7 @@ export default {
     justify-content: flex-end;
     align-items: center;
     padding: 10px;
-    border-bottom: 1px solid #dfe6e9;
+    border-bottom: 1px solid $geyser;
 
     .post-entry-image {
       margin-right: 10px;
@@ -244,6 +244,19 @@ export default {
 
     .post-entry-controls-submit {
       
+    }
+  }
+}
+
+.dark {
+  .post-entry {
+    .post-entry-container {
+      border-top: 1px solid $geyserDark;
+      border-bottom: 1px solid $geyserDark;
+    }
+
+    .post-entry-controls {
+      border-bottom: 1px solid $geyserDark;
     }
   }
 }

@@ -1,5 +1,5 @@
 <template>
-  <div id="app">
+  <div id="app" :class="{ dark: theme === 'Dark', light: theme === 'Light' }">
     <Navigation />
     <router-view/>
     <div v-if="loading" class="loading-container">
@@ -10,16 +10,25 @@
 
 <script>
 import Navigation from '@/components/Navigation/Navigation.vue';
+import themes from '@/themes';
 import { mapState } from 'vuex';
 
 export default {
   name: 'app',
+  data() {
+    return {
+      themes
+    };
+  },
   computed: {
     ...mapState({
-      loading: state => state.loading
+      loading: state => state.loading,
+      theme: state => state.theme
     })
   },
   beforeMount() {
+    this.$store.dispatch('GET_LOCAL_THEME');
+    console.log(document.documentElement.style);
     this.$store.dispatch('GET_LOCAL_USER')
       .then(response => {
         this.$router.push({ name: 'feed' });
@@ -28,6 +37,17 @@ export default {
         console.log(error);
       });
   },
+  methods: {
+    applyTheme() {
+      if (this.theme === 'Light') {
+        for (const property of themes.light) {
+
+        }
+      } else {
+
+      }
+    }
+  },
   components: {
     Navigation
   }
@@ -35,9 +55,11 @@ export default {
 </script>
 
 <style lang="scss">
-@import './style/global.scss';
+@import './styles/global.scss';
 
 #app {
+  background-color: $white;
+  min-height: 100vh;
   
   .loading-container {
     position: fixed;
@@ -48,8 +70,16 @@ export default {
     display: flex;
     justify-content: center;
     align-items: center;
-    background-color: rgba(0,0,0,0.3);
+    background-color: $blackThird;
     z-index: 10000;
+  }
+
+  &.dark {
+    background-color: $whiteDark;
+    
+    .loading-container {
+      background-color: $blackThirdDark;
+    }
   }
 }
 </style>

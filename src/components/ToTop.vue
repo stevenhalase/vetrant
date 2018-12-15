@@ -36,15 +36,20 @@ export default {
   width: 40px;
   height: 40px;
   border-radius: 50%;
-  background-color: #2d3436;
+  background-color: $outerSpace;
   opacity: 0;
   visibility: hidden;
   pointer-events: none;
   box-shadow: 0px 0px 122px -34px rgba(0,0,0,0.75);
+  color: $white;
 
   .to-top-icon {
-    color: #fff;
+    color: $white;
     font-size: 18px;
+
+    > path {
+      color: $white;
+    }
   }
 
   &.show {
@@ -52,6 +57,22 @@ export default {
     visibility: visible;
     pointer-events: unset;
     cursor: pointer;
+  }
+}
+
+.dark {
+  .to-top {
+    background-color: $outerSpaceDark;
+    box-shadow: 0px 0px 122px -34px rgba(0,0,0,0.75);
+    color: $whiteDark;
+
+    .to-top-icon {
+      color: $whiteDark;
+
+      > path {
+        color: $whiteDark;
+      }
+    }
   }
 }
 </style>

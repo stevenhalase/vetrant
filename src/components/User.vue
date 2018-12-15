@@ -13,6 +13,12 @@
       <div @click="goTo('settings')" class="user-dropdown-item">
         Settings
       </div>
+      <div @click="toggleTheme" class="user-dropdown-item">
+        <div class="theme-toggle">
+          <span>Theme:</span>
+          <span>{{ theme }}</span>
+        </div>
+      </div>
       <div @click="logout" class="user-dropdown-item">
         Logout
       </div>
@@ -32,7 +38,8 @@ export default {
   },
   computed: {
     ...mapState({
-      user: state => state.user
+      user: state => state.user,
+      theme: state => state.theme
     })
   },
   methods: {
@@ -56,6 +63,10 @@ export default {
         .catch(error => {
           console.log(error);
         });
+    },
+    toggleTheme() {
+      const newTheme = this.theme === 'Light' ? 'Dark' : 'Light';
+      this.$store.commit('SET_THEME', newTheme);
     }
   }
 }
@@ -92,21 +103,43 @@ export default {
     position: absolute;
     top: 60px;
     right: 5px;
-    background-color: #fff;
+    background-color: $white;
     box-shadow: 0px 5px 5px -3px rgba(0,0,0,0.2), 0px 8px 10px 1px rgba(0,0,0,0.14), 0px 3px 14px 2px rgba(0,0,0,0);
-    border-left: 2px solid #2d3436;
+    border-left: 2px solid $outerSpace;
 
     .user-dropdown-item {
       padding: 10px 25px;
 
+      .theme-toggle {
+        span:first-child {
+          margin-right: 5px;
+        }
+      }
+
       &:hover {
-        background-color: #f3f3f3;
+        background-color: $concrete;
       }
     }
   }
 
   &:hover {
     cursor: pointer;
+  }
+}
+
+.dark {
+  .user {
+    .user-dropdown {
+      background-color: $whiteDark;
+      box-shadow: 0px 5px 5px -3px rgba(0,0,0,0.2), 0px 8px 10px 1px rgba(0,0,0,0.14), 0px 3px 14px 2px rgba(0,0,0,0);
+      border-left: 2px solid $outerSpaceDark;
+
+      .user-dropdown-item {
+        &:hover {
+          background-color: $concreteDark;
+        }
+      }
+    }
   }
 }
 </style>

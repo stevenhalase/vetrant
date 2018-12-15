@@ -1,8 +1,8 @@
 import axios from 'axios';
 
 const API = {
-  BASE: 'http://DESKTOP-PEI2O18:64118/api/v1/',
-  // BASE: 'https://vetrant-api.herokuapp.com/api/v1/',
+  // BASE: 'http://DESKTOP-PTPKRF2:53902/api/v1/',
+  BASE: 'https://vetrant-api.herokuapp.com/api/v1/',
   USER: {
     USER: 'user/',
     LOGIN: 'user/login/',
@@ -17,6 +17,17 @@ const API = {
 };
 
 export default {
+  GET_LOCAL_THEME({ commit, state }) {
+    return new Promise((resolve, reject) => {
+      const localTheme = JSON.parse(localStorage.getItem('vr_theme'));
+      if (localTheme) {
+        commit('SET_THEME', localTheme);
+        resolve(localTheme);
+      } else {
+        reject();
+      }
+    });
+  },
   LOGIN({ commit, state }, payload) {
     return new Promise((resolve, reject) => {
       axios.post(`${API.BASE}${API.USER.LOGIN}`, payload)
@@ -205,5 +216,5 @@ export default {
           reject(error);
         });
     });
-  },
+  }
 }

@@ -79,12 +79,12 @@ export default {
     max-width: 650px;
     position: fixed;
     top: 60px;
-    background-color: #fff;
+    background-color: $white;
     display: flex;
     justify-content: space-between;
     align-items: flex-end;
     margin-bottom: 10px;
-    border-bottom: 1px solid #2d3436;
+    border-bottom: 1px solid $outerSpace;
     padding: 0 15px;
     z-index: 100;
   }
@@ -98,7 +98,22 @@ export default {
     .feed-content-view-more {
       width: 100%;
       padding: 10px;
-      border-bottom: 1px solid #dfe6e9;
+      border-bottom: 1px solid $geyser;
+    }
+  }
+}
+
+.dark {
+  .feed {
+    .feed-header {
+      background-color: $whiteDark;
+      border-bottom: 1px solid $outerSpaceDark;
+    }
+
+    .feed-content {
+      .feed-content-view-more {
+        border-bottom: 1px solid $geyserDark;
+      }
     }
   }
 }

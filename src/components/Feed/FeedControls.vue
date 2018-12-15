@@ -74,7 +74,7 @@ export default {
 
     &:hover {
       cursor: pointer;
-      border-bottom: 1px solid #2d3436;
+      border-bottom: 1px solid $outerSpace;
     }
   }
 
@@ -82,22 +82,48 @@ export default {
     position: absolute;
     top: 27px;
     left: 50px;
-    background-color: #fff;
+    background-color: $white;
     box-shadow: 0px 5px 5px -3px rgba(0,0,0,0.2), 0px 8px 10px 1px rgba(0,0,0,0.14), 0px 3px 14px 2px rgba(0,0,0,0);
-    border-left: 2px solid #2d3436;
+    border-left: 2px solid $outerSpace;
 
     .feed-controls-channels-item {
       padding: 10px 25px;
 
       &.selected {
-        background-color: #f3f3f3;
+        background-color: $concrete;
         pointer-events: none;
         font-weight: bold;
       }
 
       &:hover {
         cursor: pointer;
-        background-color: #f3f3f3;
+        background-color: $concrete;
+      }
+    }
+  }
+}
+
+.dark {
+  .feed-controls {
+    .feed-controls-selected {
+      &:hover {
+        border-bottom: 1px solid $outerSpaceDark;
+      }
+    }
+
+    .feed-controls-channels {
+      background-color: $whiteDark;
+      box-shadow: 0px 5px 5px -3px rgba(0,0,0,0.2), 0px 8px 10px 1px rgba(0,0,0,0.14), 0px 3px 14px 2px rgba(0,0,0,0);
+      border-left: 2px solid $outerSpaceDark;
+
+      .feed-controls-channels-item {
+        &.selected {
+          background-color: $concreteDark;
+        }
+
+        &:hover {
+          background-color: $concreteDark;
+        }
       }
     }
   }

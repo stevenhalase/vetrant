@@ -117,7 +117,7 @@ export default {
   align-items: flex-start;
   padding: 5px 0;
   margin: 5px 0;
-  border-bottom: 1px solid #dfe6e9;
+  border-bottom: 1px solid $geyser;
 
   .feed-item-side-controls {
     display: flex;
@@ -248,6 +248,12 @@ export default {
     .feed-item-container-comments {
       width: 100%;
     }
+  }
+}
+
+.dark {
+  .feed-item {
+    border-bottom: 1px solid $geyserDark;
   }
 }
 </style>

@@ -67,7 +67,7 @@ export default {
       .auth-logo-name {
         font-size: 28px;
         font-weight: bold;
-        color: #2d3436;
+        color: $outerSpace;
       }
     }
 
@@ -77,6 +77,18 @@ export default {
 
     .auth-submit-button {
       align-self: flex-end;
+    }
+  }
+}
+
+.dark {
+  .auth {
+    .auth-container {
+      .auth-logo {
+        .auth-logo-name {
+          color: $outerSpaceDark;
+        }
+      }
     }
   }
 }

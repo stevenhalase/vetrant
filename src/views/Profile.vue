@@ -38,4 +38,8 @@ export default {
     align-items: center;
   }
 }
+
+.dark {
+  
+}
 </style>

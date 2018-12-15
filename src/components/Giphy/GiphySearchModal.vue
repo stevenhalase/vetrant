@@ -54,10 +54,10 @@ export default {
     right: 0;
     width: 300px;
     height: 500px;
-    background-color: #f3f3f3;
+    background-color: $concrete;
     padding: 15px;
     box-shadow: 0px 5px 5px -3px rgba(0,0,0,0.2), 0px 8px 10px 1px rgba(0,0,0,0.14), 0px 3px 14px 2px rgba(0,0,0,0);
-    border-left: 2px solid #2d3436;
+    border-left: 2px solid $outerSpace;
     display: flex;
     flex-direction: column;
     justify-content: flex-start;
@@ -101,6 +101,16 @@ export default {
 
   &.open {
     display: flex;
+  }
+}
+
+.dark {
+  .giphy-search-modal {
+    .giphy-search-modal-container {
+      background-color: $concreteDark;
+      box-shadow: 0px 5px 5px -3px rgba(0,0,0,0.2), 0px 8px 10px 1px rgba(0,0,0,0.14), 0px 3px 14px 2px rgba(0,0,0,0);
+      border-left: 2px solid $outerSpaceDark;
+    }
   }
 }
 </style>

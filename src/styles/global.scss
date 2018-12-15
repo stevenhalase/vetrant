@@ -1,10 +1,16 @@
 @import url('https://fonts.googleapis.com/css?family=Roboto+Condensed:300,300i,400,400i,700,700i|Roboto:100,100i,300,300i,400,400i,500,500i,700,700i,900,900i');
+@import '_variables';
 
 * {
   box-sizing: border-box;
   font-family: 'Roboto', sans-serif;
   font-weight: 300;
   font-size: 13px;
+  color: $outerSpace;
+}
+
+::placeholder {
+  color: $outerSpace;
 }
 
 body {
@@ -22,34 +28,34 @@ h1, h2, h3, h4, h5, h6 {
 .btn {
   border: none;
   padding: 7px 14px;
-  background-color: #2d3436;
-  color: #fff;
+  background-color: $outerSpace;
+  color: $white;
   border-radius: 4px;
 
   &:hover {
     cursor: pointer;
-    background-color: #3d4548;
+    background-color: $capeCod;
   }
 
   &.btn-icon,
   &.btn-link {
     font-weight: bold;
     padding: 0;
-    color: #2d3436;
+    color: $outerSpace;
     background-color: transparent;
 
     &:hover {
       cursor: pointer;
-      color: #3d4548;
+      color: $capeCod;
     }
   }
 
   &.btn-icon-success {
-    color: #2ecc71;
+    color: $shamrock;
 
     &:hover {
       cursor: pointer;
-      color: #32dc7a;
+      color: $shamrockDark;
     }
   }
 
@@ -59,19 +65,19 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 .input {
-  color: #2d3436;
+  color: $outerSpace;
   border: none;
   padding: 10px;
-  background-color: #f3f3f3;
+  background-color: $concrete;
   border-radius: 30px;
   margin: 5px 0;
 
   &.dark {
-    background-color: #dedede;
+    background-color: $alto;
   }
 
   &:disabled {
-    background-color: #dedede;
+    background-color: $alto;
   }
 }
 
@@ -108,5 +114,55 @@ h1, h2, h3, h4, h5, h6 {
     width: 58px;
     height: 58px;
     opacity: 0;
+  }
+}
+
+.dark {
+  * {
+    color: $outerSpaceDark;
+  }
+  
+  ::placeholder {
+    color: $outerSpaceDark;
+  }
+
+  .btn {
+    background-color: $outerSpaceDark;
+    color: $whiteDark;
+  
+    &:hover {
+      background-color: $capeCodDark;
+    }
+  
+    &.btn-icon,
+    &.btn-link {
+      color: $outerSpaceDark;
+      background-color: transparent;
+  
+      &:hover {
+        color: $capeCodDark;
+      }
+    }
+  
+    &.btn-icon-success {
+      color: $shamrockDark;
+  
+      &:hover {
+        color: $shamrockDarkDark;
+      }
+    }
+  }
+  
+  .input {
+    color: $outerSpaceDark;
+    background-color: $concreteDark;
+  
+    &.dark {
+      background-color: $altoDark;
+    }
+  
+    &:disabled {
+      background-color: $altoDark;
+    }
   }
 }

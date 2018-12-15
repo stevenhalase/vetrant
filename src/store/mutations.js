@@ -1,4 +1,8 @@
 export default {
+  SET_THEME(state, payload) {
+    localStorage.setItem('vr_theme', JSON.stringify(payload));
+    state.theme = payload;
+  },
   SET_LOADING(state, payload) {
     state.loading = payload;
   },

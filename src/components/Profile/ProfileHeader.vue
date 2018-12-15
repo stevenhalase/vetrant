@@ -30,7 +30,7 @@ export default {
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  background-color: #f3f3f3;
+  background-color: $concrete;
 
   .profile-header-avatar {
     width: 100px;
@@ -45,6 +45,12 @@ export default {
   .profile-header-name {
     font-weight: bold;
     font-size: 18px;
+  }
+}
+
+.dark {
+  .profile-header {
+    background-color: $concreteDark;
   }
 }
 </style>
