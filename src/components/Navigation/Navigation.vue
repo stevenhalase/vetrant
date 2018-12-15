@@ -1,6 +1,6 @@
 <template>
   <div class="navigation">
-    <div class="logo">
+    <div @click="goTo('feed')" class="logo">
       <Logo :height="'40px'" :width="'40px'"/>
       <div class="logo-name">VetRant</div>
     </div>
@@ -19,6 +19,11 @@ export default {
     ...mapState({
       user: state => state.user
     })
+  },
+  methods: {
+    goTo(to) {
+      this.$router.push({ name: to });
+    }
   },
   components: {
     Logo,

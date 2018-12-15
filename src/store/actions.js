@@ -1,9 +1,10 @@
 import axios from 'axios';
 
 const API = {
-  // BASE: 'http://DESKTOP-PEI2O18:51640/api/v1/',
-  BASE: 'https://vetrant-api.herokuapp.com/api/v1/',
+  BASE: 'http://DESKTOP-PEI2O18:64118/api/v1/',
+  // BASE: 'https://vetrant-api.herokuapp.com/api/v1/',
   USER: {
+    USER: 'user/',
     LOGIN: 'user/login/',
     AVATAR: 'user/avatar/'
   },
@@ -179,5 +180,30 @@ export default {
           reject(error);
         });
     });
-  }
+  },
+  GET_RECENT_ACTIVITY({ commit, state }, userId) {
+    commit('SET_LOADING', true);
+    return new Promise((resolve, reject) => {
+      const activityPromises = [];
+
+      activityPromises.push(axios.get(`${API.BASE}${API.POST}${API.USER.USER}${userId}`));
+      activityPromises.push(axios.get(`${API.BASE}${API.COMMENT}${API.USER.USER}${userId}`));
+        
+      Promise.all(activityPromises)
+        .then(responses => {
+          console.log(responses);
+          const activity = [];
+          activity.push(...responses[0].data);
+          activity.push(...responses[1].data);
+          commit('SET_RECENT_ACTIVITY', activity);
+          commit('SET_LOADING', false);
+          resolve(activity);
+        })
+        .catch(error => {
+          console.log(error);
+          commit('SET_LOADING', false);
+          reject(error);
+        });
+    });
+  },
 }

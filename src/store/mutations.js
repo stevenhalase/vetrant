@@ -47,4 +47,7 @@ export default {
       }
     }
   },
+  SET_RECENT_ACTIVITY(state, payload) {
+    state.profile.recentActivity = payload;
+  },
 }

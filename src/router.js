@@ -3,6 +3,7 @@ import Router from 'vue-router';
 import Feed from './views/Feed.vue';
 import Auth from './views/Auth.vue';
 import Settings from './views/Settings.vue';
+import Profile from './views/Profile.vue';
 
 import store from './store/store';
 
@@ -32,6 +33,14 @@ const router = new Router({
       path: '/settings',
       name: 'settings',
       component: Settings,
+      meta: {
+        requireAuth: true
+      }
+    },
+    {
+      path: '/profile',
+      name: 'profile',
+      component: Profile,
       meta: {
         requireAuth: true
       }
